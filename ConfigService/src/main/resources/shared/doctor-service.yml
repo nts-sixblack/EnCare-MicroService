@@ -1,0 +1,6 @@
+cloud:
+  mapbox:
+    token: pk.eyJ1Ijoic2l4YmxhY2siLCJhIjoiY2w2M2JjMjR3MDVtZzNrbGljNHZnaWhrMyJ9.EQS58se2gcdY7oRlIJqsTg
+
+server:
+  port: 8005

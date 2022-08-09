@@ -1,0 +1,98 @@
+version: '3.9'
+
+services:
+   
+  config:
+    build: ./ConfigService
+    image: config-service
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      start_period: 15s
+    ports:
+      - "8888:8888"
+
+  registry:
+    build: ./RegistryService
+    image: registry-service
+    depends_on:
+      config:
+        condition: service_healthy
+    expose:
+      - 8761
+    ports:
+      - "8761:8761"
+
+  gateway:
+    build: ./ZuulService
+    image: gateway-service
+    links:
+      - registry
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - registry
+      - config
+
+  user:
+    build: ./UserService
+    image: user-service
+    links:
+      - registry
+    expose:
+      - 8002
+    ports:
+      - "8002:8002"
+    depends_on:
+      - gateway
+
+  appointment:
+    build: ./AppointmentService
+    image: appointment-service
+    links:
+      - registry
+    expose:
+      - 8003
+    ports:
+      - "8003:8003"
+    depends_on:
+      - gateway
+
+  patient:
+    build: ./PatientService
+    image: patient-service
+    links:
+      - registry
+    expose:
+      - 8004
+    ports:
+      - "8004:8004"
+    depends_on:
+      - gateway
+
+  doctor:
+    build: ./DoctorService
+    image: doctor-service
+    links:
+      - registry
+    expose:
+      - 8005
+    ports:
+      - "8005:8005"
+    depends_on:
+      - gateway
+
+  find:
+    build: ./FindService
+    image: find-service
+    links:
+      - registry
+    expose:
+      - 8006
+    ports:
+      - "8006:8006"
+    depends_on:
+      - gateway

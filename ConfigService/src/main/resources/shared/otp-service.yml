@@ -1,0 +1,7 @@
+twilio:
+  account_sid: AC914bef40cbbb437f8bee775b4109ec6e
+  auth_token: 4b5d0a5ad818180b1dd17db57bf0b42e
+  trial_phone: +16815324305
+
+server:
+  port: 8001

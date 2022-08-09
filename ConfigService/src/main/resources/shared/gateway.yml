@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    otp-service:
+      path: /otp/**
+      url: http://172.16.0.33:8001
+      service-id: OTP-SERVICE
+    user-service:
+      path: /user/**
+      url: http://172.16.0.33:8002
+      service-id: USER-SERVICE
+    appointment-service:
+      path: /appointment/**
+      url: http://172.16.0.33:8003
+      service-id: APPOINTMENT-SERVICE
+    patient-service:
+      path: /patient/**
+      url: http://172.16.0.33:8004
+      service-id: PATIENT-SERVICE
+    doctor-service:
+      path: /doctor/**
+      url: http://172.16.0.33:8005
+      service-id: DOCTOR-SERVICE
+    find-service:
+      path: /find/**
+      url: http://172.16.0.33:8006
+      service-id: FIND-SERVICE
+
